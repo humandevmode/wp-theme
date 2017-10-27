@@ -1,0 +1,24 @@
+.pagination {
+	.page-numbers {
+		display: inline-block;
+		padding: 5px 10px;
+		margin: 0 2px 0 0;
+		border: 1px solid #eee;
+		line-height: 1;
+		text-decoration: none;
+		border-radius: 2px;
+		font-weight: 600;
+		background-color: transparent;
+		transition: background-color .2s;
+	}
+
+	a.page-numbers {
+		color: #000;
+	}
+
+	.page-numbers.current,
+	a.page-numbers:hover {
+		color: #fff;
+		background-color: $color-accent;
+	}
+}

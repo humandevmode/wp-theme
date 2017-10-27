@@ -1,0 +1,20 @@
+.breadcrumbs {
+	@include reset-ul;
+	display: flex;
+	margin-bottom: .5rem;
+	font-size: 1rem;
+	color: #c0c0c0;
+}
+
+.breadcrumbs__item {
+	a {
+		font-weight: inherit;
+		font-size: inherit;
+		color: inherit;
+	}
+
+	& + &::before {
+		content: ">";
+		@include margin-horizontal(.5em);
+	}
+}

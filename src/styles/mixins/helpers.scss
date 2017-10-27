@@ -1,0 +1,25 @@
+@mixin reset-ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+@mixin padding-horizontal($value) {
+	padding-right: $value;
+	padding-left: $value;
+}
+
+@mixin padding-vertical($value) {
+	padding-top: $value;
+	padding-bottom: $value;
+}
+
+@mixin margin-horizontal($value) {
+	margin-right: $value;
+	margin-left: $value;
+}
+
+@mixin margin-vertical($value) {
+	margin-top: $value;
+	margin-bottom: $value;
+}

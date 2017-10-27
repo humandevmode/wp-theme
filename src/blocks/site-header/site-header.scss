@@ -1,0 +1,13 @@
+.site-header {
+	@include shadow--2dp;
+	width: 100%;
+	position: relative;
+	background-color: #000000;
+}
+
+.site-header__inner {
+	@include l-wrap;
+	@include padding-vertical(1rem);
+	display: flex;
+	align-items: center;
+}

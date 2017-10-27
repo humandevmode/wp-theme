@@ -1,0 +1,10 @@
+.site-footer {
+	position: relative;
+	margin-top: auto;
+	background-color: #2a2a2a;
+}
+
+.site-footer__inner {
+	@include l-wrap;
+	@include padding-vertical(1rem);
+}

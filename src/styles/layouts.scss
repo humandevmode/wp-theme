@@ -1,0 +1,37 @@
+@mixin l-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	width: 97%;
+	max-width: 1180px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.l-wrap {
+	@include l-wrap;
+}
+
+.l-content {
+	position: relative;
+	width: 100%;
+}
+
+.l-sidebar {
+	position: relative;
+	width: 100%;
+}
+
+@include media-breakpoint-up(lg) {
+	$gutter: 20px;
+	$sidebar-width: 240px;
+
+	.l-content {
+		width: calc(100% - (#{$gutter} + #{$sidebar-width}));
+		margin-right: $gutter;
+	}
+
+	.l-sidebar {
+		width: $sidebar-width;
+	}
+}

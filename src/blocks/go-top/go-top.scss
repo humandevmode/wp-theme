@@ -1,0 +1,35 @@
+.go-top {
+	//position: absolute;
+	display: flex;
+	align-items: center;
+	//right: 20px;
+	//bottom: -20px;
+	padding: 0;
+	margin-top: 18px;
+	margin-left: 10px;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity .2s;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+.go-top--js-show {
+	opacity: .5;
+}
+
+.go-top__arrow {
+	width: 34px;
+	height: 34px;
+}
+
+.go-top__label {
+	line-height: 1;
+	margin-left: 1em;
+	font-size: 12px;
+}
