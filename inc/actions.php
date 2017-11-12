@@ -1,6 +1,5 @@
 <?php
 
-use Theme\SvgSprite;
 use League\Plates;
 
 remove_action('wp_head', 'rsd_link');
@@ -21,10 +20,6 @@ add_action('init', function () {
 
 	$Plates->registerFunction('part', function ($name, array $data = []) use ($Plates) {
 		return $Plates->render("parts/{$name}", $data);
-	});
-
-	$Plates->registerFunction('svg', function ($name, array $attributes = []) {
-		return SvgSprite::fromFile(THEME_DIR . '/assets/images/sprite.svg')->getIcon($name, $attributes);
 	});
 });
 
