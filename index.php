@@ -1,7 +1,5 @@
 <?php
 
-defined('ABSPATH') or die();
-
 $this->layout('layout');
 
 ?>

@@ -1,42 +1,40 @@
 <?php
 
-defined('ABSPATH') or die();
+$withBreadcrumbs = isset($withBreadcrumbs) ? $withBreadcrumbs : true;
+$metaTitle = isset($metaTitle) ? $metaTitle : wp_title('', false);
 
 ?><!doctype html>
 <html lang="ru-RU">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 
-	<title><?= wp_title() ?></title>
+	<title><?= $metaTitle ?></title>
 
 	<?php wp_head() ?>
 </head>
 
 <body <?php body_class() ?>>
 
-<div class="site-page">
+<?= $this->block('site-header') ?>
 
-	<?= $this->block('site-header') ?>
+<div class="site-body">
+	<div class="site-body__inner">
 
-	<div class="site-body">
-		<div class="site-body__inner">
+		<?php if ($withBreadcrumbs) : ?>
 
 			<?= $this->block('breadcrumbs') ?>
 
-			<main class="l-content">
-				<?= $this->section('content') ?>
-			</main>
+		<?php endif; ?>
 
-			<aside class="l-sidebar">
-				<?= $this->block('sidebar') ?>
-			</aside>
-		</div>
+		<?= $this->section('content') ?>
+
+		<?= $this->block('sidebar') ?>
+
 	</div>
-
-	<?= $this->block('site-footer') ?>
-
 </div>
+
+<?= $this->block('site-footer') ?>
 
 <?php wp_footer() ?>
 

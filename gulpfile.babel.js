@@ -34,8 +34,19 @@ gulp.task('build', ['clean'], cb => {
 });
 
 gulp.task('scripts', () => {
-	gulp.src(['src/scripts/lib/**/*.*'])
+	gulp.src([
+		'node_modules/jquery/dist/jquery.min.js',
+		'node_modules/bootstrap/dist/js/bootstrap.min.js',
+		'node_modules/popper.js/dist/umd/popper.min.js',
+	])
 		.pipe(newer('assets/scripts/lib'))
+		.pipe(gulp.dest('assets/scripts/lib'));
+
+	gulp.src([
+		'node_modules/jquery-pjax/jquery.pjax.js',
+	])
+		.pipe(newer('assets/scripts/lib'))
+		.pipe(uglify())
 		.pipe(gulp.dest('assets/scripts/lib'));
 
 	return browserify('src/main.js')
@@ -109,7 +120,7 @@ gulp.task('clean', () => {
 	return del('assets/*');
 });
 
-gulp.task('serve', ['build'], () => {
+gulp.task('watch', ['build'], () => {
 	browserSync.init({
 		notify: false,
 		open: false,
@@ -129,5 +140,3 @@ gulp.task('serve', ['build'], () => {
 
 	gulp.watch(['assets/{images,scripts}/**/*.*', '**/*.php', '!inc/**/*.php'], browserSync.reload);
 });
-
-gulp.task('default', ['serve']);

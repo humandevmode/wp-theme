@@ -1,30 +1,31 @@
 <?php
 
-defined('ABSPATH') or die();
+$query = new WP_Query([
+	'post_type' => 'post',
+	'posts_per_page' => -1
+]);
 
 ?>
 
-<div class="sidebar">
+<aside class="l-sidebar">
+	<div class="sidebar">
+		<?php if ($query->have_posts()) : ?>
 
-	<?php $query = new WP_Query([
-		'post_type' => 'post',
-		'posts_per_page' => -1
-	]) ?>
+			<?php while ($query->have_posts()) : $query->the_post() ?>
 
-	<?php if ($query->have_posts()) : ?>
+				<a href="#" class="sidebar-post">
+					<?php if (has_post_thumbnail()) : ?>
 
-		<?php while ($query->have_posts()) : $query->the_post() ?>
+						<?php the_post_thumbnail('post-thumbnail', [
+							'class' => 'sidebar-post__thumb'
+						]) ?>
 
-			<a href="#" class="sidebar-post">
-				<?php if (has_post_thumbnail()) : ?><?php the_post_thumbnail('post-thumbnail', [
-					'class' => 'sidebar-post__thumb'
-				]) ?><?php endif; ?>
+					<?php endif; ?>
+					<div class="sidebar-post__text"><?php the_title() ?></div>
+				</a>
 
-				<div class="sidebar-post__text"><?php the_title() ?></div>
-			</a>
+			<?php endwhile ?>
 
-		<?php endwhile ?>
-
-	<?php endif ?><?php wp_reset_postdata() ?>
-
-</div>
+		<?php endif ?><?php wp_reset_postdata() ?>
+	</div>
+</aside>

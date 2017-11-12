@@ -7,16 +7,18 @@ $color-accent: #f32d54;
 $color-success: #1cb40d;
 $color-failed: #f43857;
 
-$color-body: #f0f0f0;
 $color-border: #959595;
-$color-border-dark: #0275d8;
+$color-border-dark: darken(#959595, 20%);
+
+$body-bg: $white;
+$body-color: $gray-900;
 
 $font-family-sans-serif: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 $font-family-serif: Georgia, "Times New Roman", Times, serif;
 $font-family-monospace: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-$base-font-family: $font-family-sans-serif;
+$font-family-base: $font-family-sans-serif;
 
-$base-font-size: 18px;
-$base-line-height: 20px;
-$base-unit: 'em';
+$font-size-base: 1rem;
+$font-weight-base: normal;
+$line-height-base: 1.5;

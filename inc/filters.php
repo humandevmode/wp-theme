@@ -1,7 +1,5 @@
 <?php
 
-defined('ABSPATH') or die();
-
 add_filter('bcn_settings_init', function ($options) {
 	foreach ($options as $key => $value) {
 		$len1 = strlen('<span');

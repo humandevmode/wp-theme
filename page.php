@@ -1,23 +1,15 @@
 <?php
 
-defined('ABSPATH') or die();
-
 $this->layout('layout');
+
+the_post();
 
 ?>
 
-<?php if (have_posts()) : ?>
+<article class="page-entry">
 
-	<?php while (have_posts()) : the_post() ?>
+	<div class="page-entry__text">
+		<?php the_content() ?>
+	</div>
 
-		<article class="page-entry">
-
-			<div class="page-entry__text">
-				<?php the_content() ?>
-			</div>
-
-		</article>
-
-	<?php endwhile ?>
-
-<?php endif ?>
+</article>

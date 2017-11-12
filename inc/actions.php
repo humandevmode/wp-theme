@@ -3,8 +3,6 @@
 use Theme\SvgSprite;
 use League\Plates;
 
-defined('ABSPATH') or die();
-
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
 

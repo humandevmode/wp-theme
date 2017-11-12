@@ -5,10 +5,4 @@
 .site-body__inner {
 	@include l-wrap;
 	@include padding-vertical(1rem);
-
-	&:after {
-		content: "";
-		display: block;
-		clear: both;
-	}
 }

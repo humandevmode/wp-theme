@@ -1,7 +1,5 @@
 <?php
 
-defined('ABSPATH') or die();
-
 DEFINE('THEME_DIR', __DIR__);
 
 require __DIR__ . '/vendor/autoload.php';
@@ -16,9 +14,9 @@ add_action('wp_enqueue_scripts', function () {
 	wp_deregister_script('jquery-form');
 	wp_deregister_script('wp-embed');
 
-	wp_register_script('jquery', get_theme_file_uri('bower_components/jquery/dist/jquery.min.js'), null, true);
-	wp_register_script('jquery-form', get_theme_file_uri('bower_components/jquery-form/jquery.form.min.js'), ['jquery'], null, true);
-	wp_register_script('js-cookie', get_theme_file_uri('bower_components/js-cookie/src/js.cookie.js'), [], null, true);
+	wp_register_script('jquery', get_theme_file_uri('assets/scripts/jquery.min.js'), [], null, true);
+	wp_register_script('jquery-pjax', get_theme_file_uri('assets/scripts/jquery-pjax.min.js'), ['jquery'], null, true);
+	wp_register_script('jquery-form', get_theme_file_uri('assets/scripts/jquery.form.min.js'), ['jquery'], null, true);
 
 	wp_enqueue_script('scripts-main', get_theme_file_uri('assets/scripts/main.js'), [
 		'jquery'
