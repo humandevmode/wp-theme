@@ -25,12 +25,19 @@ let browserSync = browser.create();
 
 gulp.task('build', ['clean'], cb => {
 	gulpSequence(
+		'fonts',
 		'images',
 		'styles',
 		'scripts',
 		'sprite:svg',
 		cb
 	);
+});
+
+gulp.task('fonts', () => {
+	return gulp.src(['src/styles/fonts/**/*'])
+		.pipe(newer('assets/styles/fonts'))
+		.pipe(gulp.dest('assets/styles/fonts'));
 });
 
 gulp.task('scripts', () => {
