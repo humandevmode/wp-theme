@@ -102,7 +102,6 @@ gulp.task('sprite:png', () => {
 });
 
 gulp.task('sprite:svg', () => {
-	"use strict";
 	return gulp.src('src/images/sprite/svg/*')
 		.pipe(svgSprite({
 			mode: {
