@@ -1,8 +1,8 @@
 .site-body {
-
+	@include padding-vertical(1rem);
+	flex-grow: 1;
 }
 
 .site-body__inner {
 	@include l-wrap;
-	@include padding-vertical(1rem);
 }
