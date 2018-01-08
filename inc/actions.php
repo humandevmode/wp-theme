@@ -1,27 +1,11 @@
 <?php
 
-use League\Plates;
-
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
 
-/** @var $Plates \League\Plates\Engine */
-global $Plates;
+global $ThemeView;
 
-add_action('init', function () {
-	global $Plates;
-
-	$Plates = new Plates\Engine(THEME_DIR);
-	$Plates->registerFunction('block', function ($name, array $data = []) use ($Plates) {
-		$dir = explode('--', $name)[0];
-
-		return $Plates->render("src/blocks/{$dir}/{$name}", $data);
-	});
-
-	$Plates->registerFunction('part', function ($name, array $data = []) use ($Plates) {
-		return $Plates->render("parts/{$name}", $data);
-	});
-});
+$ThemeView = new \Theme\View\Engine(THEME_DIR);
 
 add_action('after_setup_theme', 'theme_after_setup');
 function theme_after_setup() {

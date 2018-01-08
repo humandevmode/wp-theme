@@ -11,7 +11,7 @@ $hamburger-hover-transition-timing-function: linear !default;
 
 $hamburger-types: (slider) !default;
 
-@import "../node_modules/hamburgers/_sass/hamburgers/hamburgers";
+@import "./../../../node_modules/hamburgers/_sass/hamburgers/hamburgers";
 
 .hamburger {
 	&:focus {

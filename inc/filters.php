@@ -37,16 +37,10 @@ add_filter('bcn_allowed_html', function ($allowed_html) {
 });
 
 add_filter('template_include', function ($template) {
-	global $Plates;
+	global $ThemeView;
 
 	if ($template) {
-		$folder = $Plates->getDirectory();
-		if (strpos($template, $folder) === 0) {
-			$template = substr($template, strlen($folder));
-			$template = preg_replace('/\.php$/', '', $template);
-		}
-
-		echo $Plates->render($template);
+		echo $ThemeView->render($template);
 
 		return __DIR__ . '/blank.php';
 	}

@@ -2,8 +2,8 @@
 	@include reset-ul;
 	display: flex;
 	margin-bottom: .5rem;
-	font-size: 1rem;
-	color: #c0c0c0;
+	font-size: 14px;
+	color: $palette-grey-400;
 }
 
 .breadcrumbs__item {

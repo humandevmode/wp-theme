@@ -2,7 +2,7 @@
 
 $query = new WP_Query([
 	'post_type' => 'post',
-	'posts_per_page' => -1
+	'posts_per_page' => -1,
 ]);
 
 ?>
@@ -17,7 +17,7 @@ $query = new WP_Query([
 					<?php if (has_post_thumbnail()) : ?>
 
 						<?php the_post_thumbnail('post-thumbnail', [
-							'class' => 'sidebar-post__thumb'
+							'class' => 'sidebar-post__thumb',
 						]) ?>
 
 					<?php endif; ?>
