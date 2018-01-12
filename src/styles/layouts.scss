@@ -20,16 +20,16 @@
 	width: 100%;
 }
 
-@include media-breakpoint-up(lg) {
-	$gutter: 20px;
-	$sidebar-width: 240px;
-
-	.l-content {
-		width: calc(100% - (#{$gutter} + #{$sidebar-width}));
-		margin-right: $gutter;
-	}
-
-	.l-sidebar {
-		width: $sidebar-width;
-	}
-}
+//@include media-breakpoint-up(lg) {
+//	$gutter: 20px;
+//	$sidebar-width: 240px;
+//
+//	.l-content {
+//		width: calc(100% - (#{$gutter} + #{$sidebar-width}));
+//		margin-right: $gutter;
+//	}
+//
+//	.l-sidebar {
+//		width: $sidebar-width;
+//	}
+//}

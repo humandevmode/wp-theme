@@ -24,11 +24,12 @@ $metaTitle = isset($metaTitle) ? $metaTitle : wp_title('', false);
 	<div class="site-body__inner">
 
 		<?php if ($withBreadcrumbs) : ?>
-			<?= $this->block('breadcrumbs') ?><?php endif; ?>
+
+			<?= $this->block('breadcrumbs') ?>
+
+		<?php endif; ?>
 
 		<?= $this->section('content') ?>
-
-		<?= $this->block('sidebar') ?>
 
 	</div>
 </div>
