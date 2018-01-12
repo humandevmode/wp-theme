@@ -30,3 +30,7 @@ add_action('wp_enqueue_scripts', function () {
 
 	wp_localize_script('scripts-main', 'js_vars', $js_vars);
 });
+
+if (defined('WP_CLI') && WP_CLI) {
+	WP_CLI::add_command('themedev', \Theme\Cli\Dev::class);
+}
