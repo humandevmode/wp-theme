@@ -138,11 +138,11 @@ gulp.task('watch', ['build'], () => {
 		}
 	});
 
-	gulp.watch('src/**/*.scss', ['styles']);
-	gulp.watch('src/**/*.js', ['scripts']);
-	gulp.watch('src/images/*.*', ['images']);
-	gulp.watch('src/images/sprite/png/*.*', ['sprite:png']);
-	gulp.watch('src/images/sprite/svg/*.*', ['sprite:svg']);
+	gulp.watch('./src/**/*.scss', ['styles']);
+	gulp.watch('./src/**/*.js', ['scripts']);
+	gulp.watch('./src/images/*.*', ['images']);
+	gulp.watch('./src/images/sprite/png/*.*', ['sprite:png']);
+	gulp.watch('./src/images/sprite/svg/*.*', ['sprite:svg']);
 
-	gulp.watch(['assets/{images,scripts}/**/*.*', '**/*.php', '!inc/**/*.php'], browserSync.reload);
+	gulp.watch(['./assets/{images,scripts}/**/*.*', './**/*.php', './!inc/**/*.php'], browserSync.reload);
 });
