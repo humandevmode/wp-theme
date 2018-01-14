@@ -1,18 +1,12 @@
 .input {
-	$color-border: $color-border;
-
 	padding: .5em 1em;
-	border: 1px solid $color-border;
-	border-radius: .1em;
+	border-radius: 0;
 	width: 100%;
-	box-shadow: 0 0 0 50px #fff inset;
 	appearance: none;
 	transition: border-color .3s;
 
 	&::placeholder {
-		font-weight: 300;
-		font-style: italic;
-		transition: color .3s;
+
 	}
 
 	&:focus {
@@ -21,5 +15,13 @@
 		&::placeholder {
 			color: transparent;
 		}
+	}
+
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		transition: background-color 5000s ease-in-out 0s;
+		//-webkit-text-fill-color: #fff !important;
 	}
 }
