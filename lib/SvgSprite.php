@@ -13,11 +13,8 @@ class SvgSprite {
 
 	public function __construct(string $filePath) {
 		$this->filePath = $filePath;
-		$content = file_get_contents($this->filePath);
-		$content = str_replace('<symbol', '<svg', $content);
-		$content = str_replace('</symbol>', '</svg>', $content);
 		$this->dom = new DOMDocument();
-		@$this->dom->loadHTML($content);
+		@$this->dom->loadHTML(file_get_contents($this->filePath));
 		$this->xpath = new DOMXPath($this->dom);
 	}
 

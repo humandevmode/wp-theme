@@ -105,10 +105,11 @@ gulp.task('sprite:svg', () => {
 	return gulp.src('src/images/sprite/svg/*')
 		.pipe(svgSprite({
 			mode: {
-				symbol: {
-					inline: true,
-					dest: 'images',
-				},
+				defs: {}
+			},
+			svg: {
+				xmlDeclaration: false,
+				namespaceIDs: false
 			}
 		}))
 		.pipe(gRename('sprite.svg'))

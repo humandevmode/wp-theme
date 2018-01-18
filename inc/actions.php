@@ -7,13 +7,34 @@ global $ThemeView;
 
 $ThemeView = new \Theme\View\Engine(THEME_DIR);
 
-add_action('after_setup_theme', 'theme_after_setup');
-function theme_after_setup() {
+add_action('after_switch_theme', function () {
+	$front = get_page_by_path('front-page');
+	if (!$front) {
+		$id = wp_insert_post([
+			'post_title' => 'Главная страница',
+			'post_type' => 'page',
+			'post_name' => 'front-page',
+			'post_status' => 'publish'
+		]);
+		if (is_wp_error($id)) {
+			return;
+		}
+		$front = get_post($id);
+	}
+	update_option('page_on_front', $front->ID);
+	update_option('show_on_front', 'page');
+});
+
+add_action('after_setup_theme', function () {
 	show_admin_bar(false);
 	add_theme_support('post-thumbnails');
-}
+});
 
-add_action('init', 'register_theme_menus');
+add_action('init', function () {
+	disable_wp_emoji();
+	register_theme_menus();
+});
+
 function register_theme_menus() {
 	register_nav_menus([
 		'header-menu' => __('Header Menu'),
@@ -23,7 +44,6 @@ function register_theme_menus() {
 	]);
 }
 
-add_action('init', 'disable_wp_emoji');
 function disable_wp_emoji() {
 	// all actions related to emojis
 	remove_action('admin_print_styles', 'print_emoji_styles');
