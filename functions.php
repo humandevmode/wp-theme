@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', function () {
 	wp_deregister_script('wp-embed');
 
 	wp_register_script('jquery', get_theme_file_uri('assets/scripts/lib/jquery.min.js'), [], null, true);
-	wp_register_script('jquery-pjax', get_theme_file_uri('assets/scripts/lib/jquery-pjax.min.js'), ['jquery'], null, true);
+	wp_register_script('jquery-pjax', get_theme_file_uri('assets/scripts/lib/jquery.pjax.min.js'), ['jquery'], null, true);
 	wp_register_script('jquery-form', get_theme_file_uri('assets/scripts/lib/jquery.form.min.js'), ['jquery'], null, true);
 
 	wp_enqueue_script('scripts-main', get_theme_file_uri('assets/scripts/main.js'), [

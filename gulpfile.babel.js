@@ -18,7 +18,7 @@ import uglify from "gulp-uglify";
 import svgo from "gulp-svgo";
 import gulpSequence from "gulp-sequence";
 import svgSprite from "gulp-svg-sprite";
-import gRename from "gulp-rename";
+import rename from "gulp-rename";
 import sourcemap from "gulp-sourcemaps";
 
 let browserSync = browser.create();
@@ -52,6 +52,9 @@ gulp.task('scripts', () => {
 	gulp.src([
 		'node_modules/jquery-pjax/jquery.pjax.js',
 	])
+		.pipe(rename({
+			suffix: '.min'
+		}))
 		.pipe(newer('assets/scripts/lib'))
 		.pipe(uglify())
 		.pipe(gulp.dest('assets/scripts/lib'));
@@ -112,7 +115,7 @@ gulp.task('sprite:svg', () => {
 				namespaceIDs: false
 			}
 		}))
-		.pipe(gRename('sprite.svg'))
+		.pipe(rename('sprite.svg'))
 		.pipe(gulp.dest('assets/images'));
 });
 

@@ -1,17 +1,17 @@
 @import "variables/color-palette";
 
-$color-primary: #000;
-$color-secondary: #272727;
-$color-accent: #f32d54;
+$color-primary: #212121;
+$color-secondary: #424242;
+$color-accent: #6d4c41;
 
-$color-success: #1cb40d;
-$color-failed: #f43857;
+$color-success: #43a047;
+$color-failed: #e53935;
 
 $color-border: #959595;
 $color-border-dark: darken(#959595, 20%);
 
 $body-bg: #fff;
-$body-color: $palette-grey-900;
+$body-color: $color-primary;
 
 $font-family-sans-serif: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 $font-family-serif: Georgia, "Times New Roman", Times, serif;
@@ -22,3 +22,11 @@ $font-family-base: $font-family-sans-serif;
 $font-size-base: 1rem;
 $font-weight-base: normal;
 $line-height-base: 1.5;
+
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
+);
