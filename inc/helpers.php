@@ -4,7 +4,7 @@ use Theme\SvgSprite;
 use Theme\View\Blade;
 
 function svg_icon($name, array $attributes = []) {
-	return SvgSprite::fromFile(THEME_DIR . '/assets/images/sprite.svg')->getIcon($name, $attributes);
+	return SvgSprite::fromFile(TEMPLATEPATH . '/assets/images/sprite.svg')->getIcon($name, $attributes);
 }
 
 function filter_templates($templates) {

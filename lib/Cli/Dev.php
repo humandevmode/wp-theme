@@ -3,7 +3,6 @@
 namespace Theme\Cli;
 
 use Core\Helpers\FileHelper;
-use Illuminate\Support\Facades\Storage;
 
 class Dev extends \WP_CLI_Command {
 	/**
@@ -14,16 +13,16 @@ class Dev extends \WP_CLI_Command {
 	public function block($args, $assoc_args) {
 		$name = $this->parseName($args, $assoc_args);
 
-		$path = THEME_DIR . '/src/blocks/' . trim($name);
+		$path = TEMPLATEPATH . '/src/blocks/' . trim($name);
 		if (!is_dir($path)) {
 			mkdir($path, 0755);
 		}
 		file_put_contents($path . "/{$name}.js", '');
 		file_put_contents($path . "/{$name}.scss", ".{$name} {\n\t\n}\n");
-		file_put_contents(THEME_DIR . "/views/blocks/{$name}.blade.php", "@extends('layouts.base')\n");
+		file_put_contents(TEMPLATEPATH . "/views/blocks/{$name}.blade.php", "@extends('layouts.base')\n");
 
-		file_put_contents(THEME_DIR . '/src/main.js', $this->blockRequire($name), FILE_APPEND);
-		file_put_contents(THEME_DIR . '/src/main.scss', $this->blockImport($name), FILE_APPEND);
+		file_put_contents(TEMPLATEPATH . '/src/main.js', $this->blockRequire($name), FILE_APPEND);
+		file_put_contents(TEMPLATEPATH . '/src/main.scss', $this->blockImport($name), FILE_APPEND);
 	}
 
 	/**
@@ -44,7 +43,7 @@ the_post();
 \$this->layout('layout');
 
 EOL;
-		file_put_contents(THEME_DIR . "/$name.php", $content);
+		file_put_contents(TEMPLATEPATH . "/$name.php", $content);
 	}
 
 	/**
@@ -55,16 +54,16 @@ EOL;
 	public function deleteBlock($args, $assoc_args) {
 		$name = $this->parseName($args, $assoc_args);
 
-		$path = THEME_DIR . '/src/blocks/' . trim($name);
+		$path = TEMPLATEPATH . '/src/blocks/' . trim($name);
 		if (is_dir($path)) {
 			FileHelper::removeDirectory($path);
 		}
-		$filePath = THEME_DIR . "/views/blocks/{$name}.blade.php";
+		$filePath = TEMPLATEPATH . "/views/blocks/{$name}.blade.php";
 		if (is_file($filePath)) {
 			unlink($filePath);
 		}
 
-		$filePath = THEME_DIR . '/src/main.js';
+		$filePath = TEMPLATEPATH . '/src/main.js';
 		if (is_file($filePath)) {
 			$contents = file_get_contents($filePath);
 			if (strpos($contents, $this->blockRequire($name)) !== false) {
@@ -72,7 +71,7 @@ EOL;
 			}
 		}
 
-		$filePath = THEME_DIR . '/src/main.scss';
+		$filePath = TEMPLATEPATH . '/src/main.scss';
 		if (is_file($filePath)) {
 			$contents = file_get_contents($filePath);
 			if (strpos($contents, $this->blockImport($name)) !== false) {
