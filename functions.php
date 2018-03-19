@@ -27,10 +27,12 @@ add_action('wp_enqueue_scripts', function () {
 		'post_url' => admin_url('admin-post.php'),
 		'is_user_logged_in' => is_user_logged_in(),
 	];
-
-	wp_localize_script('scripts-main', 'js_vars', $js_vars);
+//	wp_localize_script('scripts-main', 'js_vars', $js_vars);
 });
 
-if (defined('WP_CLI') && WP_CLI) {
-	WP_CLI::add_command('themedev', \Theme\Cli\Dev::class);
+try {
+	if (defined('WP_CLI') && WP_CLI) {
+		WP_CLI::add_command('themedev', \Theme\Cli\Dev::class);
+	}
 }
+catch (Throwable $e) {}

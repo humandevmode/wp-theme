@@ -36,11 +36,52 @@ add_filter('bcn_allowed_html', function ($allowed_html) {
 	return $allowed_html;
 });
 
-add_filter('template_include', function ($template) {
-	global $ThemeView;
+/**
+ * Add <body> classes
+ */
+add_filter('body_class', function (array $classes) {
+	/** Add page slug if it doesn't exist */
+	if (is_single() || is_page() && !is_front_page()) {
+		if (!in_array(basename(get_permalink()), $classes)) {
+			$classes[] = basename(get_permalink());
+		}
+	}
 
+	/** Clean up class names for custom templates */
+	$classes = array_map(function ($class) {
+		return preg_replace(['/-blade(-php)?$/', '/^page-template-views/'], '', $class);
+	}, $classes);
+
+	return array_filter($classes);
+});
+
+/**
+ * Template Hierarchy should search for .blade.php files
+ */
+collect([
+	'index',
+	'404',
+	'archive',
+	'author',
+	'category',
+	'tag',
+	'taxonomy',
+	'date',
+	'home',
+	'frontpage',
+	'page',
+	'paged',
+	'search',
+	'single',
+	'singular',
+	'attachment',
+])->map(function ($type) {
+	add_filter("{$type}_template_hierarchy", 'filter_templates');
+});
+
+add_filter('template_include', function ($template) {
 	if ($template) {
-		echo $ThemeView->render($template);
+		echo _render_template($template);
 
 		return __DIR__ . '/blank.php';
 	}
@@ -116,7 +157,7 @@ function register_russian_datetime($date = '') {
 		'th' => '',
 		'st' => '',
 		'nd' => '',
-		'rd' => ''
+		'rd' => '',
 	];
 
 	return strtr($date, $replaces);

@@ -2,12 +2,15 @@
 
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
-
-global $ThemeView;
-
-$ThemeView = new \Theme\View\Engine(THEME_DIR);
+remove_action('wp_head', 'wp_oembed_add_discovery_links');
+remove_action('wp_head', 'wp_oembed_add_host_js');
+remove_action('wp_head', 'wp_shortlink_wp_head', 10);
 
 add_action('after_switch_theme', function () {
+	$cache = wp_upload_dir()['basedir'] . '/blade';
+	if (!is_dir($cache)) {
+		mkdir($cache);
+	}
 	$front = get_page_by_path('front-page');
 	if (!$front) {
 		$id = wp_insert_post([
@@ -21,8 +24,8 @@ add_action('after_switch_theme', function () {
 		}
 		$front = get_post($id);
 	}
-	update_option('page_on_front', $front->ID);
 	update_option('show_on_front', 'page');
+	update_option('page_on_front', $front->ID);
 });
 
 add_action('after_setup_theme', function () {

@@ -2,27 +2,92 @@
 
 namespace Theme\Cli;
 
+use Core\Helpers\FileHelper;
+use Illuminate\Support\Facades\Storage;
+
 class Dev extends \WP_CLI_Command {
+	/**
+	 * @param $args
+	 * @param $assoc_args
+	 * @throws \Exception
+	 */
 	public function block($args, $assoc_args) {
-		$name = $this->parseBlockName($args, $assoc_args);
+		$name = $this->parseName($args, $assoc_args);
 
 		$path = THEME_DIR . '/src/blocks/' . trim($name);
 		if (!is_dir($path)) {
 			mkdir($path, 0755);
 		}
 		file_put_contents($path . "/{$name}.js", '');
-		file_put_contents($path . "/{$name}.php", '');
 		file_put_contents($path . "/{$name}.scss", ".{$name} {\n\t\n}\n");
+		file_put_contents(THEME_DIR . "/views/blocks/{$name}.blade.php", "@extends('layouts.base')\n");
 
 		file_put_contents(THEME_DIR . '/src/main.js', $this->blockRequire($name), FILE_APPEND);
 		file_put_contents(THEME_DIR . '/src/main.scss', $this->blockImport($name), FILE_APPEND);
 	}
 
-	public function deleteBlock() {
+	/**
+	 * @param $args
+	 * @param $assoc_args
+	 * @throws \Exception
+	 */
+	public function page($args, $assoc_args) {
+		$name = $this->parseName($args, $assoc_args);
+		$content = <<<EOL
+<?php
 
+/**
+ * @var \$this \Theme\View\Template
+ */
+
+the_post();
+\$this->layout('layout');
+
+EOL;
+		file_put_contents(THEME_DIR . "/$name.php", $content);
 	}
 
-	protected function parseBlockName($args, $assoc_args) {
+	/**
+	 * @param $args
+	 * @param $assoc_args
+	 * @throws \Exception
+	 */
+	public function deleteBlock($args, $assoc_args) {
+		$name = $this->parseName($args, $assoc_args);
+
+		$path = THEME_DIR . '/src/blocks/' . trim($name);
+		if (is_dir($path)) {
+			FileHelper::removeDirectory($path);
+		}
+		$filePath = THEME_DIR . "/views/blocks/{$name}.blade.php";
+		if (is_file($filePath)) {
+			unlink($filePath);
+		}
+
+		$filePath = THEME_DIR . '/src/main.js';
+		if (is_file($filePath)) {
+			$contents = file_get_contents($filePath);
+			if (strpos($contents, $this->blockRequire($name)) !== false) {
+				file_put_contents($filePath, str_replace($this->blockRequire($name), '', $contents));
+			}
+		}
+
+		$filePath = THEME_DIR . '/src/main.scss';
+		if (is_file($filePath)) {
+			$contents = file_get_contents($filePath);
+			if (strpos($contents, $this->blockImport($name)) !== false) {
+				file_put_contents($filePath, str_replace($this->blockImport($name), '', $contents));
+			}
+		}
+	}
+
+	/**
+	 * @param $args
+	 * @param $assoc_args
+	 * @return string
+	 * @throws \Exception
+	 */
+	protected function parseName($args, $assoc_args) {
 		if (isset($args[0])) {
 			$name = $args[0];
 		}

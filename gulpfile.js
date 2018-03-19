@@ -1,25 +1,26 @@
-import gulp from "gulp";
-import del from "del";
-import newer from "gulp-newer";
-import sass from "gulp-sass";
-import plumber from "gulp-plumber";
-import notify from "gulp-notify";
-import autoprefixer from "gulp-autoprefixer";
-import csso from "gulp-csso";
-import postcss from "gulp-postcss";
-import mqpacker from "css-mqpacker";
-import source from "vinyl-source-stream";
-import buffer from "vinyl-buffer";
-import browserify from "browserify";
-import babel from "babelify";
-import browser from "browser-sync";
-import spriteSmith from "gulp.spritesmith";
-import uglify from "gulp-uglify";
-import svgo from "gulp-svgo";
-import gulpSequence from "gulp-sequence";
-import svgSprite from "gulp-svg-sprite";
-import rename from "gulp-rename";
-import sourcemap from "gulp-sourcemaps";
+const gulp = require('gulp');
+const del = require('del');
+const newer = require('gulp-newer');
+const sass = require('gulp-sass');
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
+const autoprefixer = require('gulp-autoprefixer');
+const csso = require('gulp-csso');
+const postcss = require('gulp-postcss');
+const mqpacker = require('css-mqpacker');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const browserify = require('browserify');
+const babel = require('babelify');
+const browser = require('browser-sync');
+const spriteSmith = require('gulp.spritesmith');
+const uglify = require('gulp-uglify');
+const svgo = require('gulp-svgo');
+const gulpSequence = require('gulp-sequence');
+const svgSprite = require('gulp-svg-sprite');
+const rename = require('gulp-rename');
+const sourcemap = require('gulp-sourcemaps');
+const watch = require('gulp-watch');
 
 let browserSync = browser.create();
 
@@ -40,7 +41,7 @@ gulp.task('fonts', () => {
 		.pipe(gulp.dest('assets/styles/fonts'));
 });
 
-gulp.task('scripts', () => {
+let scripts = function () {
 	gulp.src([
 		'node_modules/jquery/dist/jquery.min.js',
 		'node_modules/bootstrap/dist/js/bootstrap.min.js',
@@ -66,9 +67,9 @@ gulp.task('scripts', () => {
 		.pipe(buffer())
 		.pipe(uglify())
 		.pipe(gulp.dest('assets/scripts'));
-});
+};
 
-gulp.task('styles', () => {
+let styles = function () {
 	return gulp.src('src/main.scss')
 		.pipe(plumber({
 			errorHandler: notify.onError()
@@ -87,9 +88,16 @@ gulp.task('styles', () => {
 		.pipe(sourcemap.write('./'))
 		.pipe(gulp.dest('assets/styles'))
 		.pipe(browserSync.stream());
-});
+};
 
-gulp.task('sprite:png', () => {
+let images = function () {
+	return gulp.src(['src/images/**/*', '!src/images/{sprite,sprite/**}'])
+		.pipe(newer('assets/images'))
+		.pipe(svgo())
+		.pipe(gulp.dest('assets/images'));
+};
+
+let spritePng = function () {
 	let data = gulp.src('src/images/sprite/png/*')
 		.pipe(spriteSmith({
 			imgName: 'sprite.png',
@@ -102,9 +110,9 @@ gulp.task('sprite:png', () => {
 		}));
 	data.img.pipe(gulp.dest('assets/images'));
 	data.css.pipe(gulp.dest('src/styles/mixins'));
-});
+};
 
-gulp.task('sprite:svg', () => {
+let spriteSvg = function () {
 	return gulp.src('src/images/sprite/svg/*')
 		.pipe(svgSprite({
 			mode: {
@@ -117,14 +125,13 @@ gulp.task('sprite:svg', () => {
 		}))
 		.pipe(rename('sprite.svg'))
 		.pipe(gulp.dest('assets/images'));
-});
+};
 
-gulp.task('images', () => {
-	return gulp.src(['src/images/**/*', '!src/images/{sprite,sprite/**}'])
-		.pipe(newer('assets/images'))
-		.pipe(svgo())
-		.pipe(gulp.dest('assets/images'));
-});
+gulp.task('scripts', scripts);
+gulp.task('styles', styles);
+gulp.task('images', images);
+gulp.task('sprite:png', spritePng);
+gulp.task('sprite:svg', spriteSvg);
 
 gulp.task('clean', () => {
 	return del('assets/*');
@@ -142,11 +149,10 @@ gulp.task('watch', ['build'], () => {
 		}
 	});
 
-	gulp.watch('./src/**/*.scss', ['styles']);
-	gulp.watch('./src/**/*.js', ['scripts']);
-	gulp.watch('./src/images/*.*', ['images']);
-	gulp.watch('./src/images/sprite/png/*.*', ['sprite:png']);
-	gulp.watch('./src/images/sprite/svg/*.*', ['sprite:svg']);
-
-	gulp.watch(['./assets/{images,scripts}/**/*.*', './**/*.php', './!inc/**/*.php'], browserSync.reload);
+	watch('./src/**/*.js', scripts);
+	watch('./src/**/*.scss', styles);
+	watch('./src/images/*.*', images);
+	watch('./src/images/sprite/png/*.*', spritePng);
+	watch('./src/images/sprite/svg/*.*', spriteSvg());
+	watch(['./assets/{images,scripts}/**/*.*', './**/*.php', './!inc/**/*.php'], browserSync.reload);
 });
