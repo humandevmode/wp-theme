@@ -154,5 +154,5 @@ gulp.task('watch', ['build'], () => {
 	watch('./src/images/*.*', images);
 	watch('./src/images/sprite/png/*.*', spritePng);
 	watch('./src/images/sprite/svg/*.*', spriteSvg());
-	watch(['!./inc/**/*.php'], browserSync.reload);
+	watch(['./assets/{images,scripts}/**/*.*', './views/**/*.blade.php'], browserSync.reload);
 });
