@@ -29,7 +29,6 @@ add_action('after_switch_theme', function () {
 });
 
 add_action('after_setup_theme', function () {
-	show_admin_bar(false);
 	add_theme_support('post-thumbnails');
 });
 
