@@ -1,10 +1,11 @@
 @mixin button {
-	$bg-color: #eb6009;
+	$bg-color: #212121;
 	@include shadow--2dp;
 	position: relative;
 	padding: .5em 1.5em;
-	background: none;
 	border: none;
+	border-radius: 3px;
+	background: none;
 	text-align: center;
 	font-weight: 500;
 	color: #fff;
@@ -13,7 +14,7 @@
 	transition: all .2s;
 
 	&:hover {
-		@include shadow--4dp;
+		@include shadow--6dp;
 		background-color: darken($bg-color, 4%);
 	}
 
@@ -24,6 +25,12 @@
 
 	&:focus {
 		outline: none;
+	}
+
+	&:disabled {
+		background-color: #aaaaaa;
+		background-image: none;
+		cursor: default;
 	}
 }
 

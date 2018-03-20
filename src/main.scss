@@ -2,10 +2,15 @@
 @import "styles/mixins";
 
 @import "../node_modules/bootstrap/scss/bootstrap-reboot";
+@import "../node_modules/bootstrap/scss/utilities";
 @import "styles/base";
 @import "styles/layouts";
 @import "styles/common";
 //@import "styles/fonts";
+
+@import "blocks/button/button";
+@import "blocks/input/input";
+@import "blocks/form/form";
 
 @import "blocks/site-header/site-header";
 @import "blocks/site-body/site-body";

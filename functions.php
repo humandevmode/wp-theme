@@ -25,7 +25,7 @@ add_action('wp_enqueue_scripts', function () {
 //		'post_url' => admin_url('admin-post.php'),
 //		'is_user_logged_in' => is_user_logged_in(),
 	];
-//	wp_localize_script('scripts-main', 'js_vars', $js_vars);
+	wp_localize_script('scripts-main', 'js_vars', $js_vars);
 });
 
 try {
