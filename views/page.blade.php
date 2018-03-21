@@ -2,6 +2,6 @@
 
 @php(the_post())
 
-@section
+@section('content')
 	<h1>This is page template</h1>
 @endsection

@@ -37,6 +37,23 @@ add_action('init', function () {
 	register_theme_menus();
 });
 
+add_action('admin_bar_init', function () {
+	remove_action('wp_head', '_admin_bar_bump_cb');
+	add_action('wp_head', function () {
+		print '
+		<style type="text/css" media="screen">
+			body {
+				padding-top: 32px !important;
+			}
+			@media screen and (max-width: 782px) {
+				body {
+					padding-top: 46px !important;
+				}
+			}
+		</style>';
+	});
+});
+
 function register_theme_menus() {
 	register_nav_menus([
 		'header-menu' => __('Header Menu'),
