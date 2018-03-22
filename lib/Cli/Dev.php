@@ -19,7 +19,15 @@ class Dev extends \WP_CLI_Command {
 		}
 		file_put_contents($path . "/{$name}.js", '');
 		file_put_contents($path . "/{$name}.scss", ".{$name} {\n\t\n}\n");
-		file_put_contents(TEMPLATEPATH . "/views/blocks/{$name}.blade.php", "@extends('layouts.base')\n");
+		file_put_contents(TEMPLATEPATH . "/views/blocks/{$name}.blade.php", <<<EOL
+@extends('layouts.base')
+
+@section('content')
+	<h1>This is {$name} block</h1>
+@endsection
+
+EOL
+		);
 
 		file_put_contents(TEMPLATEPATH . '/src/main.js', $this->blockRequire($name), FILE_APPEND);
 		file_put_contents(TEMPLATEPATH . '/src/main.scss', $this->blockImport($name), FILE_APPEND);
@@ -33,17 +41,16 @@ class Dev extends \WP_CLI_Command {
 	public function page($args, $assoc_args) {
 		$name = $this->parseName($args, $assoc_args);
 		$content = <<<EOL
-<?php
+@extends('layouts.base')
 
-/**
- * @var \$this \Theme\View\Template
- */
+@php(the_post())
 
-the_post();
-\$this->layout('layout');
+@section('content')
+	<h1>This is page template</h1>
+@endsection
 
 EOL;
-		file_put_contents(TEMPLATEPATH . "/$name.php", $content);
+		file_put_contents(TEMPLATEPATH . "/views/$name.blade.php", $content);
 	}
 
 	/**
