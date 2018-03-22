@@ -1,14 +1,14 @@
 @import "variables/color-palette";
 
-$color-primary: #212121;
-$color-secondary: #424242;
-$color-accent: #6d4c41;
+$color-primary: #212121; // grey 900
+$color-secondary: #424242; // grey 800
+$color-accent: #6d4c41; // brown 600
 
-$color-success: #43a047;
-$color-error: #e53935;
+$color-success: #43a047; // green 600
+$color-error: #e53935; // red 600
 
-$color-border: #959595;
-$color-border-dark: darken(#959595, 20%);
+$color-border: #424242; // grey 800
+$color-border-dark: #212121; // grey 900
 
 $body-bg: #fff;
 $body-color: $color-primary;
