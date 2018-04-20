@@ -1,5 +1,7 @@
 <?php
 
+use Core\Helpers\PostHelper;
+
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'wp_oembed_add_discovery_links');
@@ -11,21 +13,14 @@ add_action('after_switch_theme', function () {
 	if (!is_dir($cache)) {
 		mkdir($cache);
 	}
-	$front = get_page_by_path('front-page');
-	if (!$front) {
-		$id = wp_insert_post([
-			'post_title' => 'Главная страница',
-			'post_type' => 'page',
-			'post_name' => 'front-page',
-			'post_status' => 'publish'
+	try {
+		$page_id = PostHelper::ensurePageExist('front-page', [
+			'post_title' => 'Главная страница'
 		]);
-		if (is_wp_error($id)) {
-			return;
-		}
-		$front = get_post($id);
+		update_option('show_on_front', 'page');
+		update_option('page_on_front', $page_id);
 	}
-	update_option('show_on_front', 'page');
-	update_option('page_on_front', $front->ID);
+	catch (Exception $exception) {}
 });
 
 add_action('after_setup_theme', function () {
@@ -37,28 +32,9 @@ add_action('init', function () {
 	register_theme_menus();
 });
 
-add_action('admin_bar_init', function () {
-	remove_action('wp_head', '_admin_bar_bump_cb');
-	add_action('wp_head', function () {
-		print '
-		<style type="text/css" media="screen">
-			body {
-				padding-top: 32px !important;
-			}
-			@media screen and (max-width: 782px) {
-				body {
-					padding-top: 46px !important;
-				}
-			}
-		</style>';
-	});
-});
-
 function register_theme_menus() {
 	register_nav_menus([
-		'header-menu' => __('Header Menu'),
-		'sidebar-menu' => __('Sidebar Menu'),
-		'footer-menu' => __('Footer Menu'),
+		'main-menu' => __('Main Menu'),
 		'mobile-menu' => __('Mobile Menu'),
 	]);
 }
@@ -72,7 +48,4 @@ function disable_wp_emoji() {
 	remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 	remove_filter('the_content_feed', 'wp_staticize_emoji');
 	remove_filter('comment_text_rss', 'wp_staticize_emoji');
-
-	// filter to remove TinyMCE emojis
-	add_filter('tiny_mce_plugins', 'disable_emojicons_tinymce');
 }

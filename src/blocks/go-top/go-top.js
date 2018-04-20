@@ -1,18 +1,19 @@
-jQuery(function($) {
-	let $button = $('#go-top');
-	let showClass = 'go-top--js-show';
+export default function() {
+	let button = document.getElementById('#go-top');
+	const CLASS_SHOW = 'go-top--js-show';
 
-	$(window).scroll(function() {
-		if ($(this).scrollTop() >= 300) {
-			$button.addClass(showClass);
-		} else {
-			$button.removeClass(showClass);
-		}
-	});
+	if (button) {
+		window.addEventListener('scroll', function () {
+			if (window.scrollY >= 300) {
+				button.classList.add(CLASS_SHOW);
+			}
+			else {
+				button.classList.remove(CLASS_SHOW);
+			}
+		})
 
-	$button.on('click', function() {
-		$('html, body').animate({
-			scrollTop : 0
-		}, 500);
-	});
-});
+		button.addEventListener('click', function () {
+			window.scrollTo(0, 0);
+		})
+	}
+}

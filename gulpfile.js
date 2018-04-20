@@ -63,7 +63,7 @@ let scripts = function () {
 	return browserify('src/main.js')
 		.transform(babel)
 		.bundle().on('error', notify.onError())
-		.pipe(source('main.js'))
+		.pipe(source('main.min.js'))
 		.pipe(buffer())
 		.pipe(uglify())
 		.pipe(gulp.dest('assets/scripts'));
@@ -86,6 +86,9 @@ let styles = function () {
 		]))
 		.pipe(csso())
 		.pipe(sourcemap.write('./'))
+		.pipe(rename({
+			suffix: '.min'
+		}))
 		.pipe(gulp.dest('assets/styles'))
 		.pipe(browserSync.stream());
 };
@@ -139,7 +142,8 @@ gulp.task('clean', () => {
 
 gulp.task('watch', ['build'], () => {
 	browserSync.init({
-		notify: false,
+		notify
+			: false,
 		open: false,
 		browser: 'chrome.exe',
 		proxy: 'starter.loc',
@@ -153,6 +157,6 @@ gulp.task('watch', ['build'], () => {
 	watch('./src/**/*.scss', styles);
 	watch('./src/images/*.*', images);
 	watch('./src/images/sprite/png/*.*', spritePng);
-	watch('./src/images/sprite/svg/*.*', spriteSvg());
+	watch('./src/images/sprite/svg/*.*', spriteSvg);
 	watch(['./assets/{images,scripts}/**/*.*', './views/**/*.blade.php'], browserSync.reload);
 });

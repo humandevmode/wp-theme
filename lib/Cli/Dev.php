@@ -20,12 +20,7 @@ class Dev extends \WP_CLI_Command {
 		file_put_contents($path . "/{$name}.js", '');
 		file_put_contents($path . "/{$name}.scss", ".{$name} {\n\t\n}\n");
 		file_put_contents(TEMPLATEPATH . "/views/blocks/{$name}.blade.php", <<<EOL
-@extends('layouts.base')
-
-@section('content')
-	<h1>This is {$name} block</h1>
-@endsection
-
+.{$name}
 EOL
 		);
 
