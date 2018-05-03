@@ -1,14 +1,16 @@
 .breadcrumbs {
 	@include reset-list;
 	display: flex;
+	overflow: auto;
 	margin-bottom: .5rem;
 	font-size: 14px;
+	white-space: nowrap;
 }
 
 .breadcrumbs__item {
 	a {
-		font-weight: inherit;
 		font-size: inherit;
+		font-weight: inherit;
 		color: inherit;
 	}
 

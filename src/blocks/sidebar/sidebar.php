@@ -12,7 +12,6 @@ $query = new WP_Query([
 		<?php if ($query->have_posts()) : ?>
 
 			<?php while ($query->have_posts()) : $query->the_post() ?>
-
 				<a href="#" class="sidebar-post">
 					<?php if (has_post_thumbnail()) : ?>
 
@@ -23,7 +22,6 @@ $query = new WP_Query([
 					<?php endif; ?>
 					<div class="sidebar-post__text"><?php the_title() ?></div>
 				</a>
-
 			<?php endwhile ?>
 
 		<?php endif ?><?php wp_reset_postdata() ?>

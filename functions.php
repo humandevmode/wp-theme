@@ -5,8 +5,11 @@ require __DIR__ . '/inc/actions.php';
 require __DIR__ . '/inc/filters.php';
 require __DIR__ . '/inc/helpers.php';
 
+/** @var $Plates \League\Plates\Engine */
+global $Plates;
+
 add_action('wp_enqueue_scripts', function () {
-	wp_enqueue_style('styles-main', get_theme_file_uri('assets/styles/main.min.css'), [], filemtime(__DIR__ . '/assets/styles/main.css'));
+	wp_enqueue_style('styles-main', get_theme_file_uri('assets/styles/main.min.css'), [], filemtime(__DIR__ . '/assets/styles/main.min.css'));
 
 	wp_deregister_script('jquery');
 	wp_deregister_script('jquery-form');

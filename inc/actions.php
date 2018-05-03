@@ -1,6 +1,7 @@
 <?php
 
 use Core\Helpers\PostHelper;
+use League\Plates;
 
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
@@ -8,11 +9,21 @@ remove_action('wp_head', 'wp_oembed_add_discovery_links');
 remove_action('wp_head', 'wp_oembed_add_host_js');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10);
 
+add_action('init', function () {
+	initPlates();
+	disable_wp_emoji();
+	register_theme_menus();
+});
+
 add_action('after_switch_theme', function () {
-	$cache = wp_upload_dir()['basedir'] . '/blade';
-	if (!is_dir($cache)) {
-		mkdir($cache);
-	}
+	ensurePagesExists();
+});
+
+add_action('after_setup_theme', function () {
+	add_theme_support('post-thumbnails');
+});
+
+function ensurePagesExists() {
 	try {
 		$page_id = PostHelper::ensurePageExist('front-page', [
 			'post_title' => 'Главная страница'
@@ -21,16 +32,18 @@ add_action('after_switch_theme', function () {
 		update_option('page_on_front', $page_id);
 	}
 	catch (Exception $exception) {}
-});
+}
 
-add_action('after_setup_theme', function () {
-	add_theme_support('post-thumbnails');
-});
+function initPlates() {
+	global $Plates;
 
-add_action('init', function () {
-	disable_wp_emoji();
-	register_theme_menus();
-});
+	$Plates = new Plates\Engine(TEMPLATEPATH);
+	$Plates->registerFunction('block', function ($name, array $data = []) use ($Plates) {
+		$dir = explode('--', $name)[0];
+
+		return $Plates->render("src/blocks/{$dir}/{$name}", $data);
+	});
+}
 
 function register_theme_menus() {
 	register_nav_menus([
