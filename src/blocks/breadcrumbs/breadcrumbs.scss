@@ -1,21 +1,21 @@
 .breadcrumbs {
-	@include reset-list;
 	display: flex;
 	overflow: auto;
 	margin-bottom: .5rem;
 	font-size: 14px;
 	white-space: nowrap;
-}
+	
+	span[typeof="ListItem"] + span[typeof="ListItem"] {
+		&::before {
+			@include margin-horizontal(.4em);
+			content: '>';
+		}
+	}
 
-.breadcrumbs__item {
 	a {
 		font-size: inherit;
 		font-weight: inherit;
 		color: inherit;
 	}
-
-	& + &::before {
-		content: ">";
-		@include margin-horizontal(.5em);
-	}
 }
+

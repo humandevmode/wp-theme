@@ -1,0 +1,19 @@
+$rating-gutter: 0.3em;
+
+.rating {
+	@include margin-horizontal(-$rating-gutter);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 16px;
+}
+
+.rating__gradient {
+	position: absolute;
+	left: -9999px;
+}
+
+.rating__star {
+	@include margin-horizontal($rating-gutter);
+	width: 1em;
+	height: 1em;
+}

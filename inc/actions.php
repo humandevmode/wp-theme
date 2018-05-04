@@ -21,6 +21,9 @@ add_action('after_switch_theme', function () {
 
 add_action('after_setup_theme', function () {
 	add_theme_support('post-thumbnails');
+	add_theme_support('amp', [
+		'template_dir' => 'amp',
+	]);
 });
 
 function ensurePagesExists() {

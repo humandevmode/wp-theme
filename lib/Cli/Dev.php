@@ -19,7 +19,7 @@ class Dev extends \WP_CLI_Command {
 		}
 		file_put_contents($path . "/{$name}.js", '');
 		file_put_contents($path . "/{$name}.scss", ".{$name} {\n\t\n}\n");
-		file_put_contents(TEMPLATEPATH . "/views/blocks/{$name}.blade.php", <<<EOL
+		file_put_contents($path . "/{$name}.php", <<<EOL
 .{$name}
 EOL
 		);
@@ -36,16 +36,15 @@ EOL
 	public function page($args, $assoc_args) {
 		$name = $this->parseName($args, $assoc_args);
 		$content = <<<EOL
-@extends('layouts.base')
+<?php
 
-@php(the_post())
+the_post();
+\$this->layout('layout');
 
-@section('content')
-	<h1>This is page template</h1>
-@endsection
+?>
 
 EOL;
-		file_put_contents(TEMPLATEPATH . "/views/$name.blade.php", $content);
+		file_put_contents(TEMPLATEPATH . "/$name.php", $content);
 	}
 
 	/**
@@ -59,10 +58,6 @@ EOL;
 		$path = TEMPLATEPATH . '/src/blocks/' . trim($name);
 		if (is_dir($path)) {
 			FileHelper::removeDirectory($path);
-		}
-		$filePath = TEMPLATEPATH . "/views/blocks/{$name}.blade.php";
-		if (is_file($filePath)) {
-			unlink($filePath);
 		}
 
 		$filePath = TEMPLATEPATH . '/src/main.js';
