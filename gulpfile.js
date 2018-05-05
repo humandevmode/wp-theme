@@ -27,7 +27,7 @@ gulp.task('watch', ['prepare'], () => {
 		notify: false,
 		port: 3998,
 		proxy: {
-			target: "starter.loc",
+			target: 'starter.loc',
 			proxyReq: [
 				function (proxyReq) {
 					proxyReq.setHeader('X-BrowserSync', 'true');
@@ -146,9 +146,16 @@ function spriteSvg() {
 		'src/**/images/sprite/*.svg',
 	])
 		.pipe(svgSprite({
+			mode: {
+				defs: {}
+			},
+			svg: {
+				xmlDeclaration: false,
+				namespaceIDs: false
+			},
 			shape: {
 				id: {
-					generator: name => {
+					generator(name) {
 						let parts = name.split('/');
 						if (parts[0] === 'blocks') {
 							return parts[1] + '__' + path.basename(name, '.svg');
@@ -158,13 +165,6 @@ function spriteSvg() {
 					}
 				},
 			},
-			mode: {
-				defs: {}
-			},
-			svg: {
-				xmlDeclaration: false,
-				namespaceIDs: false
-			}
 		}))
 		.pipe(rename('sprite.svg'))
 		.pipe(gulp.dest('assets/images'));

@@ -7,6 +7,14 @@ body {
 	min-height: 100vh;
 }
 
+body.admin-bar {
+	padding-top: 46px;
+
+	@include media-breakpoint-up(md, (md: 783px)) {
+		padding-top: 32px;
+	}
+}
+
 img {
 	max-width: 100%;
 	max-height: 100%;

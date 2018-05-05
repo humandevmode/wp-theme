@@ -2,6 +2,23 @@
 	margin: 5px 20px 20px 0;
 }
 
+#wp-toolbar {
+	display: flex;
+	overflow-x: auto;
+}
+
+#wp-admin-bar-root-default {
+	display: flex;
+}
+
+#wp-admin-bar-top-secondary {
+	display: flex;
+}
+
+.ab-top-menu {
+	overflow: auto;
+}
+
 .aligncenter,
 div.aligncenter {
 	display: block;
