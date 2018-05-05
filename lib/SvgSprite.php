@@ -2,20 +2,28 @@
 
 namespace Theme;
 
-use DOMDocument;
-use DOMXPath;
-
 class SvgSprite {
-	protected $dom;
-	protected $xpath;
-	protected $filePath;
+	protected $xml;
 	protected static $sprites;
 
 	public function __construct(string $filePath) {
-		$this->filePath = $filePath;
-		$this->dom = new DOMDocument();
-		@$this->dom->loadHTML(file_get_contents($this->filePath));
-		$this->xpath = new DOMXPath($this->dom);
+		$this->xml = simplexml_load_file($filePath);
+		$this->xml->registerXPathNamespace('svg', 'http://www.w3.org/2000/svg');
+	}
+
+	public function getIcon(string $name, array $attributes = []): string {
+		$result = '';
+		$icons = $this->xml->xpath(sprintf('//svg:svg[@id="%s"]', $name));
+		if ($icons) {
+			$icon = clone $icons[0];
+			unset($icon['id']);
+			foreach ($attributes as $key => $value) {
+				$icon[$key] = $value;
+			}
+			$result = $icon->asXML();
+		}
+
+		return $result;
 	}
 
 	public static function fromFile(string $filePath): SvgSprite {
@@ -24,21 +32,5 @@ class SvgSprite {
 		}
 
 		return static::$sprites[$filePath];
-	}
-
-	public function getIcon(string $name, array $attributes = []): string {
-		$result = '';
-		$icons = $this->xpath->query(sprintf('//svg[@id="%s"]', $name));
-		if ($icons->length) {
-			/** @var $icon \DOMElement */
-			$icon = $icons->item(0)->cloneNode(true);
-			$icon->removeAttribute('id');
-			foreach ($attributes as $key => $value) {
-				$icon->setAttribute($key, $value);
-			}
-			$result = $this->dom->saveHTML($icon);
-		}
-
-		return $result;
 	}
 }

@@ -1,7 +1,7 @@
-'use strict'
-
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 const baseConfig = require('./webpack.base');
+
 
 module.exports = Object.assign({}, baseConfig, {
 	mode: 'development',
@@ -51,7 +51,15 @@ module.exports = Object.assign({}, baseConfig, {
 					'css-loader?sourceMap',
 					'postcss-loader?sourceMap',
 					'resolve-url-loader',
-					'sass-loader?sourceMap'
+					{
+						loader: "sass-loader", options: {
+							sourceMap: true,
+							data: '@import "styles/global";',
+							includePaths: [
+								path.resolve(__dirname, '../')
+							]
+						}
+					}
 				]
 			},
 			{

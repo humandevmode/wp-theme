@@ -1,3 +1,5 @@
+import './site-header.scss';
+
 jQuery(function ($) {
 	window.$siteHeader = $('#site-header');
 	let $header = window.$siteHeader;

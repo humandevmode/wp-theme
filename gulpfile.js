@@ -1,123 +1,163 @@
-const gulp = require('gulp');
 const del = require('del');
+const gulp = require('gulp');
 const newer = require('gulp-newer');
-const sass = require('gulp-sass');
-const plumber = require('gulp-plumber');
-const notify = require('gulp-notify');
-const autoprefixer = require('gulp-autoprefixer');
-const csso = require('gulp-csso');
-const postcss = require('gulp-postcss');
-const mqpacker = require('css-mqpacker');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
-const browserify = require('browserify');
-const babel = require('babelify');
 const browser = require('browser-sync');
-const spriteSmith = require('gulp.spritesmith');
 const uglify = require('gulp-uglify');
 const svgo = require('gulp-svgo');
+const notify = require('gulp-notify');
 const gulpSequence = require('gulp-sequence');
 const svgSprite = require('gulp-svg-sprite');
 const rename = require('gulp-rename');
-const sourcemap = require('gulp-sourcemaps');
 const watch = require('gulp-watch');
+const webpack = require('webpack');
+const gutil = require('gulp-util');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const path = require('path');
 
-let browserSync = browser.create();
+const browserSync = browser.create();
 
-gulp.task('build', ['clean'], cb => {
+gulp.task('watch', ['prepare'], () => {
+	let config = require('./src/config/webpack.dev');
+	const compiler = webpack(config);
+
+	browserSync.init({
+		ui: false,
+		open: false,
+		notify: false,
+		port: 3998,
+		proxy: {
+			target: "starter.loc",
+			proxyReq: [
+				function (proxyReq) {
+					proxyReq.setHeader('X-BrowserSync', 'true');
+				}
+			]
+		},
+		files: [
+			'./*.php',
+			'./src/blocks/**/*.php',
+		],
+		ghostMode: false,
+		middleware: [
+			webpackDevMiddleware(compiler, {
+				publicPath: config.output.publicPath,
+				hot: true
+			}),
+			webpackHotMiddleware(compiler),
+		],
+	});
+
+	watch('./src/images/*.*', images);
+	watch('./src/**/images/sprite/*.svg', spriteSvg);
+});
+
+gulp.task('prepare', done => {
 	gulpSequence(
-		'fonts',
+		'clean',
 		'images',
-		'styles',
-		'scripts',
+		'js:libs',
 		'sprite:svg',
-		cb
+		done
 	);
 });
 
-gulp.task('fonts', () => {
-	return gulp.src(['src/styles/fonts/**/*'])
-		.pipe(newer('assets/styles/fonts'))
-		.pipe(gulp.dest('assets/styles/fonts'));
+gulp.task('build', done => {
+	gulpSequence(
+		'prepare',
+		'webpack',
+		done
+	);
 });
 
-let scripts = function () {
+gulp.task('images', images);
+gulp.task('js:libs', scripts);
+gulp.task('sprite:svg', spriteSvg);
+
+gulp.task('clean', () => {
+	return del('assets/*')
+});
+
+gulp.task('webpack', function (done) {
+	webpack(require('./src/config/webpack.prod'), function (error, stats) {
+		if (error) {
+			onError(error);
+		} else if (stats.hasErrors()) {
+			onError(stats.toString({
+				colors: true,
+				reasons: true
+			}));
+		} else {
+			onSuccess(stats.toString({
+				colors: true,
+				reasons: true
+			}));
+		}
+	});
+
+	function onError(error) {
+		let formattedError = new gutil.PluginError('webpack', error);
+		notify({
+			title: `Error: ${formattedError.plugin}`,
+			message: formattedError.message
+		});
+		done(formattedError);
+	}
+
+	function onSuccess(detailInfo) {
+		gutil.log('[webpack]', detailInfo);
+		done();
+	}
+});
+
+function scripts() {
 	gulp.src([
 		'node_modules/jquery/dist/jquery.min.js',
 		'node_modules/bootstrap/dist/js/bootstrap.min.js',
 		'node_modules/popper.js/dist/umd/popper.min.js',
+		'node_modules/select2/dist/js/select2.min.js',
+		'node_modules/selectric/public/jquery.selectric.min.js',
 	])
-		.pipe(newer('assets/scripts/lib'))
 		.pipe(gulp.dest('assets/scripts/lib'));
 
-	gulp.src([
+	return gulp.src([
 		'node_modules/jquery-pjax/jquery.pjax.js',
 	])
 		.pipe(rename({
 			suffix: '.min'
 		}))
-		.pipe(newer('assets/scripts/lib'))
 		.pipe(uglify())
 		.pipe(gulp.dest('assets/scripts/lib'));
+}
 
-	return browserify('src/main.js')
-		.transform(babel)
-		.bundle().on('error', notify.onError())
-		.pipe(source('main.min.js'))
-		.pipe(buffer())
-		.pipe(uglify())
-		.pipe(gulp.dest('assets/scripts'));
-};
-
-let styles = function () {
-	return gulp.src('src/main.scss')
-		.pipe(plumber({
-			errorHandler: notify.onError()
-		}))
-		.pipe(sourcemap.init())
-		.pipe(sass())
-		.pipe(autoprefixer([
-			'last 2 version', '> 1%'
-		]))
-		.pipe(postcss([
-			mqpacker({
-				sort: true
-			}),
-		]))
-		.pipe(csso())
-		.pipe(sourcemap.write('./'))
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(gulp.dest('assets/styles'))
-		.pipe(browserSync.stream());
-};
-
-let images = function () {
-	return gulp.src(['src/images/**/*', '!src/images/{sprite,sprite/**}'])
+function images() {
+	return gulp.src([
+		'src/images/*',
+		'!src/images/sprite',
+		'!src/images/sprite/**'
+	])
 		.pipe(newer('assets/images'))
 		.pipe(svgo())
 		.pipe(gulp.dest('assets/images'));
-};
+}
 
-let spritePng = function () {
-	let data = gulp.src('src/images/sprite/png/*')
-		.pipe(spriteSmith({
-			imgName: 'sprite.png',
-			cssName: 'sprite.scss',
-			algorithm: 'binary-tree',
-			cssTemplate: 'src/config/spritesmith.conf',
-			cssVarMap: function (sprite) {
-				sprite.name = 's-' + sprite.name
-			}
-		}));
-	data.img.pipe(gulp.dest('assets/images'));
-	data.css.pipe(gulp.dest('src/styles/mixins'));
-};
-
-let spriteSvg = function () {
-	return gulp.src('src/images/sprite/svg/*')
+function spriteSvg() {
+	return gulp.src([
+		'src/**/images/sprite/*.svg',
+	])
 		.pipe(svgSprite({
+			shape: {
+				id: {
+					generator: name => {
+						let parts = name.split('/');
+						if (parts[0] === 'blocks') {
+							return parts[1] + '__' + path.basename(name, '.svg');
+						}
+
+						return path.basename(name, '.svg');
+					}
+				},
+			},
 			mode: {
 				defs: {}
 			},
@@ -128,35 +168,4 @@ let spriteSvg = function () {
 		}))
 		.pipe(rename('sprite.svg'))
 		.pipe(gulp.dest('assets/images'));
-};
-
-gulp.task('scripts', scripts);
-gulp.task('styles', styles);
-gulp.task('images', images);
-gulp.task('sprite:png', spritePng);
-gulp.task('sprite:svg', spriteSvg);
-
-gulp.task('clean', () => {
-	return del('assets/*');
-});
-
-gulp.task('watch', ['build'], () => {
-	browserSync.init({
-		notify
-			: false,
-		open: false,
-		browser: 'chrome.exe',
-		proxy: 'starter.loc',
-		port: 3998,
-		ui: {
-			port: 3999
-		}
-	});
-
-	watch('./src/**/*.js', scripts);
-	watch('./src/**/*.scss', styles);
-	watch('./src/images/*.*', images);
-	watch('./src/images/sprite/png/*.*', spritePng);
-	watch('./src/images/sprite/svg/*.*', spriteSvg);
-	watch(['./assets/{images,scripts}/**/*.*', './views/**/*.blade.php'], browserSync.reload);
-});
+}

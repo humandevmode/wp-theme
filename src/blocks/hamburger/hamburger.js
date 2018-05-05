@@ -1,3 +1,5 @@
+import './hamburger.scss';
+
 export default function () {
 	let hamburger = document.getElementById('mobile-menu-trigger');
 	const CLASS_TOGGLE = 'js-mobile-menu-open';

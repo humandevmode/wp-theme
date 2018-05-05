@@ -1,8 +1,8 @@
-'use strict'
-
+const path = require('path');
 const webpack = require('webpack')
 const baseConfig = require('./webpack.base');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = Object.assign({}, baseConfig, {
 	mode: 'production',
@@ -14,7 +14,7 @@ module.exports = Object.assign({}, baseConfig, {
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'styles/main.min.css'
-		})
+		}),
 	],
 	module: {
 		rules: [
@@ -51,7 +51,15 @@ module.exports = Object.assign({}, baseConfig, {
 					'css-loader?minimize',
 					'postcss-loader',
 					'resolve-url-loader',
-					'sass-loader?sourceMap'
+					{
+						loader: "sass-loader", options: {
+							sourceMap: true,
+							data: '@import "styles/global";',
+							includePaths: [
+								path.join(__dirname, '../')
+							]
+						}
+					}
 				]
 			},
 			{

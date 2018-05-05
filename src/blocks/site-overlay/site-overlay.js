@@ -1,3 +1,5 @@
+import './site-overlay.scss';
+
 jQuery(function ($) {
 	let showClass = 'site-overlay--js-show';
 	window.$overlay = $('#site-overlay');

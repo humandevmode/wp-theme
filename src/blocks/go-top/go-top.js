@@ -1,3 +1,5 @@
+import './go-top.scss';
+
 export default function() {
 	let button = document.getElementById('#go-top');
 	const CLASS_SHOW = 'go-top--js-show';

@@ -1,9 +1,11 @@
+@import "styles/mixins.scss";
+
 .site-header {
 	position: relative;
 	background-color: #000;
 }
 
 .site-header__inner {
-	@include l-wrap;
+	@include l-container;
 	@include padding-vertical(1rem);
 }
