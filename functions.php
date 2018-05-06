@@ -41,7 +41,7 @@ add_action('wp_enqueue_scripts', function () {
 
 try {
 	if (defined('WP_CLI') && WP_CLI) {
-		WP_CLI::add_command('themedev', \Theme\Cli\Dev::class);
+		WP_CLI::add_command('themedev', \Theme\Cli\DevCommands::class);
 	}
 } catch (Throwable $e) {
 }
