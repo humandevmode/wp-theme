@@ -10,4 +10,3 @@ $this->layout('layout');
 <article class="post-entry">
 	<div class="post-entry__text"><?php the_content() ?></div>
 </article>
-
