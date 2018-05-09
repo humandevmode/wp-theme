@@ -67,7 +67,7 @@ module.exports = Object.assign({}, baseConfig, {
 				loader: 'url-loader',
 				options: {
 					limit: 4096,
-					outputPath: 'vendor/',
+					outputPath: 'bundle/',
 					name: '[name].[hash:6].[ext]',
 				}
 			},

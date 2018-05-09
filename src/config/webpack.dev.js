@@ -63,14 +63,13 @@ module.exports = Object.assign({}, baseConfig, {
 				]
 			},
 			{
-				test: /\.svg$/,
-				loader: 'svg-inline-loader'
-			},
-			{
 				test: /\.(ttf|eot|woff2?|png|jpe?g|gif|svg|ico)$/,
-				use: [
-					'url-loader?limit=4096&outputPath=vendor/&name=[name].[hash:6].[ext]'
-				]
+				loader: 'url-loader',
+				options: {
+					limit: 4096,
+					outputPath: 'bundle/',
+					name: '[name].[hash:6].[ext]',
+				}
 			},
 		],
 	}
