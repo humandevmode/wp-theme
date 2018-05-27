@@ -14,20 +14,21 @@ const gutil = require('gulp-util');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const path = require('path');
+const config = require('./config');
 
 const browserSync = browser.create();
 
 gulp.task('watch', ['prepare'], () => {
-	let config = require('./src/config/webpack.dev');
-	const compiler = webpack(config);
+	let webpack_config = require('./src/config/webpack.dev');
+	const compiler = webpack(webpack_config);
 
 	browserSync.init({
 		ui: false,
 		open: false,
 		notify: false,
-		port: 3998,
+		port: config.browserSync.port,
 		proxy: {
-			target: 'starter.loc',
+			target: config.browserSync.proxy.target,
 			proxyReq: [
 				function (proxyReq) {
 					proxyReq.setHeader('X-BrowserSync', 'true');
@@ -41,7 +42,7 @@ gulp.task('watch', ['prepare'], () => {
 		ghostMode: false,
 		middleware: [
 			webpackDevMiddleware(compiler, {
-				publicPath: config.output.publicPath,
+				publicPath: webpack_config.output.publicPath,
 				hot: true
 			}),
 			webpackHotMiddleware(compiler),
