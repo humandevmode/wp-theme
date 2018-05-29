@@ -14,13 +14,12 @@ const gutil = require('gulp-util');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const path = require('path');
-const config = require('./config');
+const config = require('./src/config');
 
 const browserSync = browser.create();
 
 gulp.task('watch', ['prepare'], () => {
-	let webpack_config = require('./src/config/webpack.dev');
-	const compiler = webpack(webpack_config);
+	const compiler = webpack(config.webpack.dev);
 
 	browserSync.init({
 		ui: false,
@@ -42,7 +41,7 @@ gulp.task('watch', ['prepare'], () => {
 		ghostMode: false,
 		middleware: [
 			webpackDevMiddleware(compiler, {
-				publicPath: webpack_config.output.publicPath,
+				publicPath: config.webpack.dev.output.publicPath,
 				hot: true
 			}),
 			webpackHotMiddleware(compiler),
@@ -80,7 +79,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('webpack', function (done) {
-	webpack(require('./src/config/webpack.prod'), function (error, stats) {
+	webpack(config.webpack.prod, function (error, stats) {
 		if (error) {
 			onError(error);
 		} else if (stats.hasErrors()) {

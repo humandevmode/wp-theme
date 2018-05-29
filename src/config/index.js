@@ -4,5 +4,9 @@ module.exports = {
 		proxy: {
 			target: 'starter.loc'
 		}
+	},
+	webpack: {
+		dev: require('./webpack.dev'),
+		prod: require('./webpack.prod'),
 	}
 }
