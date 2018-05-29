@@ -1,6 +1,7 @@
-const path = require('path');
 const webpack = require('webpack');
 const baseConfig = require('./webpack.base');
+
+const config = require('./base');
 
 
 module.exports = Object.assign({}, baseConfig, {
@@ -56,7 +57,7 @@ module.exports = Object.assign({}, baseConfig, {
 							sourceMap: true,
 							data: '@import "styles/global";',
 							includePaths: [
-								path.resolve(__dirname, '../')
+								config.theme_src
 							]
 						}
 					}

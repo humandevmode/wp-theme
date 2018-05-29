@@ -1,7 +1,8 @@
-const path = require('path');
 const webpack = require('webpack')
 const baseConfig = require('./webpack.base');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const config = require('./base');
 
 
 module.exports = Object.assign({}, baseConfig, {
@@ -56,7 +57,7 @@ module.exports = Object.assign({}, baseConfig, {
 							sourceMap: true,
 							data: '@import "styles/global";',
 							includePaths: [
-								path.join(__dirname, '../')
+								config.theme_src
 							]
 						}
 					}
