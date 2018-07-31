@@ -1,1 +1,1 @@
-import './date.scss'
+import './date.scss';

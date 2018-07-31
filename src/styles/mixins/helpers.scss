@@ -1,49 +1,49 @@
 @mixin reset-list {
-	padding: 0;
-	margin: 0;
-	list-style: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 @mixin reset-button {
-	padding: 0;
-	margin: 0;
-	line-height: 1;
-	border: 0;
-	border-radius: 0;
-	background-color: transparent;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
 }
 
 @mixin padding-horizontal($value) {
-	padding-right: $value;
-	padding-left: $value;
+  padding-right: $value;
+  padding-left: $value;
 }
 
 @mixin padding-vertical($value) {
-	padding-top: $value;
-	padding-bottom: $value;
+  padding-top: $value;
+  padding-bottom: $value;
 }
 
 @mixin margin-horizontal($value) {
-	margin-right: $value;
-	margin-left: $value;
+  margin-right: $value;
+  margin-left: $value;
 }
 
 @mixin margin-vertical($value) {
-	margin-top: $value;
-	margin-bottom: $value;
+  margin-top: $value;
+  margin-bottom: $value;
 }
 
 @mixin l-container {
-	@include margin-horizontal(10px);
-	position: relative;
+  @include margin-horizontal(10px);
+  position: relative;
 
-	@include media-breakpoint-up(sm) {
-		@include margin-horizontal(15px);
-	}
+  @include media-breakpoint-up(sm) {
+    @include margin-horizontal(15px);
+  }
 
-	@include media-breakpoint-up(md) {
-		@include margin-horizontal(auto);
-		width: 97%;
-		max-width: 1180px;
-	}
+  @include media-breakpoint-up(md) {
+    @include margin-horizontal(auto);
+    width: 97%;
+    max-width: 1180px;
+  }
 }

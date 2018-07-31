@@ -1,15 +1,15 @@
 .site-overlay {
-	display: none;
-	position: fixed;
-	overflow-y: scroll;
-	z-index: 999;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(40, 40, 40, .75);
+  display: none;
+  position: fixed;
+  overflow-y: scroll;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(40, 40, 40, .75);
 }
 
 .site-overlay--js-show {
-	display: block;
+  display: block;
 }

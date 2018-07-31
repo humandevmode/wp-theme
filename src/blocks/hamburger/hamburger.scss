@@ -14,15 +14,15 @@ $hamburger-types: (slider) !default;
 @import "./../../../node_modules/hamburgers/_sass/hamburgers/hamburgers";
 
 .hamburger {
-	&:focus {
-		outline: 0;
-	}
+  &:focus {
+    outline: 0;
+  }
 
-	&.is-active {
-		.hamburger-inner,
-		.hamburger-inner::before,
-		.hamburger-inner::after {
-			background-color: $color-accent;
-		}
-	}
+  &.is-active {
+    .hamburger-inner,
+    .hamburger-inner::before,
+    .hamburger-inner::after {
+      background-color: $color-accent;
+    }
+  }
 }

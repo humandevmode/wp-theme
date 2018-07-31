@@ -1,7 +1,5 @@
 <footer id="site-footer" class="site-footer">
-	<div class="site-footer__inner">
+  <div class="site-footer__inner">
 
-
-
-	</div>
+  </div>
 </footer>

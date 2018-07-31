@@ -1,21 +1,21 @@
 .breadcrumbs {
-	display: flex;
-	overflow: auto;
-	margin-bottom: .5rem;
-	font-size: 14px;
-	white-space: nowrap;
-	
-	span[typeof="ListItem"] + span[typeof="ListItem"] {
-		&::before {
-			@include margin-horizontal(.4em);
-			content: '>';
-		}
-	}
+  display: flex;
+  overflow: auto;
+  margin-bottom: .5rem;
+  font-size: 14px;
+  white-space: nowrap;
 
-	a {
-		font-size: inherit;
-		font-weight: inherit;
-		color: inherit;
-	}
+  span[typeof="ListItem"] + span[typeof="ListItem"] {
+    &::before {
+      @include margin-horizontal(.4em);
+      content: '>';
+    }
+  }
+
+  a {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
 }
 

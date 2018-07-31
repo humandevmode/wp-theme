@@ -1,54 +1,54 @@
 .form {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	padding: 20px;
-	border-radius: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 .form__header {
-	display: flex;
-	margin-bottom: 20px;
-	width: 100%;
-	align-items: center;
-	justify-content: space-between;
+  display: flex;
+  margin-bottom: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .form__title {
-	@include margin-vertical(0);
-	line-height: 1.4;
-	font-size: 20px;
-	font-weight: 700;
-	color: #322d2d;
+  @include margin-vertical(0);
+  line-height: 1.4;
+  font-size: 20px;
+  font-weight: 700;
+  color: #322d2d;
 }
 
 .form__fields {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form__field {
-	display: flex;
-	margin-bottom: 10px;
-	width: 100%;
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .form__result {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form__result--success {
-	color: $color-success;
+  color: $color-success;
 }
 
 .form__result--error {
-	color: $color-error;
+  color: $color-error;
 }
 
 .form__submit {
-	@include button;
-	align-self: flex-start;
-	margin-left: auto;
+  @include button;
+  align-self: flex-start;
+  margin-left: auto;
 }

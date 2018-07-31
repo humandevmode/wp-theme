@@ -1,9 +1,9 @@
 .site-footer {
-	@include padding-vertical(1rem);
-	position: relative;
-	background-color: #2a2a2a;
+  @include padding-vertical(1rem);
+  position: relative;
+  background-color: #2a2a2a;
 }
 
 .site-footer__inner {
-	@include l-container;
+  @include l-container;
 }

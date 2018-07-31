@@ -1,39 +1,39 @@
 @mixin button {
-	$bg-color: #212121;
-	@include shadow--2dp;
-	position: relative;
-	padding: .5em 1.5em;
-	border: none;
-	border-radius: 3px;
-	background: none;
-	text-align: center;
-	font-weight: 500;
-	color: #fff;
-	background-color: $bg-color;
-	cursor: pointer;
-	transition: all .2s;
+  $bg-color: #212121;
+  @include shadow--2dp;
+  position: relative;
+  padding: .5em 1.5em;
+  border: none;
+  border-radius: 3px;
+  background: none;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+  background-color: $bg-color;
+  cursor: pointer;
+  transition: all .2s;
 
-	&:hover {
-		@include shadow--6dp;
-		background-color: darken($bg-color, 4%);
-	}
+  &:hover {
+    @include shadow--6dp;
+    background-color: darken($bg-color, 4%);
+  }
 
-	&:active {
-		@include shadow--4dp;
-		background-color: darken($bg-color, 8%);
-	}
+  &:active {
+    @include shadow--4dp;
+    background-color: darken($bg-color, 8%);
+  }
 
-	&:focus {
-		outline: none;
-	}
+  &:focus {
+    outline: none;
+  }
 
-	&:disabled {
-		background-color: #aaaaaa;
-		background-image: none;
-		cursor: default;
-	}
+  &:disabled {
+    background-color: #aaaaaa;
+    background-image: none;
+    cursor: default;
+  }
 }
 
 .button {
-	@include button;
+  @include button;
 }
