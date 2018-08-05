@@ -131,13 +131,23 @@ function scripts() {
 }
 
 function images() {
-  return gulp.src([
+  gulp.src([
     'src/images/*',
     '!src/images/sprite',
-    '!src/images/sprite/**',
   ])
     .pipe(newer('assets/images'))
     .pipe(svgo())
+    .pipe(gulp.dest('assets/images'));
+
+  gulp.src([
+    'src/blocks/**/images/*',
+    '!src/images/sprite',
+  ])
+    .pipe(newer('assets/images'))
+    .pipe(svgo())
+    .pipe(rename(function(path) {
+      path.dirname = path.dirname.replace('/images', '');
+    }))
     .pipe(gulp.dest('assets/images'));
 }
 

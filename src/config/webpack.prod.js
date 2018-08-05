@@ -63,13 +63,29 @@ module.exports = Object.assign({}, baseConfig, {
         ],
       },
       {
-        test: /\.(ttf|eot|woff2?|png|jpe?g|gif|svg|ico)$/,
+        test: /\.(ttf|eot|woff2?)$/,
         loader: 'url-loader',
         options: {
           limit: 4096,
           outputPath: 'bundle/',
           name: '[name].[hash:6].[ext]',
         },
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+              outputPath: 'bundle/',
+              name: '[name].[hash:6].[ext]',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+          },
+        ]
       },
     ],
   },
