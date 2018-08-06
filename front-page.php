@@ -1,7 +1,9 @@
 <?php
 
 the_post();
-$this->layout('layout');
+$this->layout('layout', [
+  'with_breadcrumbs' => false,
+]);
 
 ?>
 
