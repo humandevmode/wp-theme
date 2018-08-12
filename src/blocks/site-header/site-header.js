@@ -1,9 +1,10 @@
 import './site-header.scss';
 
+let $header;
+let lastScrollTop = 0;
+
 jQuery(function($) {
-  window.$siteHeader = $('#site-header');
-  let $header = window.$siteHeader;
-  let lastScrollTop = 0;
+  $header = $('#site-header');
 
   $(window).scroll(function(event) {
     let st = $(this).scrollTop();
@@ -19,3 +20,8 @@ jQuery(function($) {
     lastScrollTop = st;
   });
 });
+
+export {
+  $header,
+  lastScrollTop
+}
