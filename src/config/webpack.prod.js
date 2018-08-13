@@ -52,7 +52,8 @@ module.exports = Object.assign({}, baseConfig, {
           'postcss-loader',
           'resolve-url-loader',
           {
-            loader: 'sass-loader', options: {
+            loader: 'sass-loader',
+            options: {
               sourceMap: true,
               includePaths: [
                 config.theme_src,
@@ -84,7 +85,7 @@ module.exports = Object.assign({}, baseConfig, {
           {
             loader: 'image-webpack-loader',
           },
-        ]
+        ],
       },
     ],
   },
