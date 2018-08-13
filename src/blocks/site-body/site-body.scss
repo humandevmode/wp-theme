@@ -1,3 +1,5 @@
+@import "styles/global";
+
 .site-body {
   @include padding-vertical(1rem);
   flex-grow: 1;

@@ -1,3 +1,5 @@
+@import "styles/global";
+
 @mixin button {
   $bg-color: #212121;
   @include shadow--2dp;

@@ -11,7 +11,7 @@ $hamburger-hover-transition-timing-function: linear !default;
 
 $hamburger-types: (slider) !default;
 
-@import "./../../../node_modules/hamburgers/_sass/hamburgers/hamburgers";
+@import "~hamburgers/_sass/hamburgers/hamburgers";
 
 .hamburger {
   &:focus {
@@ -22,7 +22,7 @@ $hamburger-types: (slider) !default;
     .hamburger-inner,
     .hamburger-inner::before,
     .hamburger-inner::after {
-      background-color: $color-accent;
+      background-color: #000;
     }
   }
 }

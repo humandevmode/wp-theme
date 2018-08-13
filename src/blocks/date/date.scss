@@ -1,16 +1,19 @@
 $date-gutter: .2em;
 
 .date {
-  @include margin-horizontal(-$date-gutter);
   display: flex;
   font-size: 12px;
   letter-spacing: .04em;
+  margin-left: -$date-gutter;
+  margin-right: -$date-gutter;
 }
 
 .date__day {
-  @include margin-horizontal($date-gutter);
+  margin-left: $date-gutter;
+  margin-right: $date-gutter;
 }
 
 .date__time {
-  @include margin-horizontal($date-gutter);
+  margin-left: $date-gutter;
+  margin-right: $date-gutter;
 }

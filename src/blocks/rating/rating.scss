@@ -1,10 +1,11 @@
-$rating-gutter: 0.3em;
+$gutter: 0.3em;
 
 .rating {
-  @include margin-horizontal(-$rating-gutter);
   display: flex;
   flex-wrap: wrap;
   font-size: 16px;
+  margin-left: -$gutter;
+  margin-right: -$gutter;
 }
 
 .rating__gradient {
@@ -13,7 +14,8 @@ $rating-gutter: 0.3em;
 }
 
 .rating__star {
-  @include margin-horizontal($rating-gutter);
   width: 1em;
   height: 1em;
+  margin-left: $gutter;
+  margin-right: $gutter;
 }

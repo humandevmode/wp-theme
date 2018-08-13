@@ -54,7 +54,6 @@ module.exports = Object.assign({}, baseConfig, {
           {
             loader: 'sass-loader', options: {
               sourceMap: true,
-              data: '@import "styles/global";',
               includePaths: [
                 config.theme_src,
               ],
